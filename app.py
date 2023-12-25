@@ -1,13 +1,11 @@
 import telebot
 
-bot = telebot.TeleBot("YOUR_BOT_TOKEN",parse_mode='html')
+bot = telebot.TeleBot("6482725249:AAEG6jO6tCYQEVfbPeKxkQv1RgPwvJ896q0")
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-	bot.reply_to(message, "<b> Howdy, how are you doing? <b> ")
+	bot.reply_to(message, """👋 Salom The Wind 卍 | 🇺🇿AC botimizga xush kelibsiz!
 
-@bot.message_handler(func=lambda message: True)
-def echo_all(message):
-	bot.reply_to(message, message.text)
+🔰 Quyidagi menyular orqali botdan foydalaning 👇""")
 
 bot.infinity_polling()
