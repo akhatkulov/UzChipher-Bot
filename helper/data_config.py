@@ -1,22 +1,32 @@
 import sqlite3
 
-db = sqlite3.connect('data/database.db')
+db = sqlite3.connect('data/database.db',check_same_thread=False)
 cursor = db.cursor()
 
 db.execute("""CREATE TABLE IF NOT EXISTS users(
     CID INT PRIMARY KEY NOT NULL,
-    STAT INT NOT NULL,
-    CHANNEL TEXT NOT NULL,
-    LANG TEXT,
-    STEP TEXT,
-)""")
+    LANG TEXT DEFAULT "uzbek",
+    STEP TEXT DEFAULT "home")""")
+
+def users_info():
+    x = db.execute("""SELECT CID FROM users""")
+    x.fetchall()
+    print(x)
+    return x
+
+def add_user(cid):
+    try:
+        db.execute("""INSERT INTO users(CID)
+            VALUES(?,?)""",(cid))
+    except:
+        pass
+    db.commit()
+
 
 def n_append(id,lang):
     db.execute("""INSERT INTO users(CID,LANG)
         VALUES(?,?)""",(id,lang))
     db.commit()
-
-
 
 def change_lang(id,lang):
     db.execute("""UPDATE users set LANG = ? WHERE CID = ?""",(lang,id))
@@ -29,3 +39,4 @@ def get_step(id):
     return x
 def get_info(id):
     x = db.cursor("""SELECT LANG FROM users WHERE CID = ?""",(id))
+users_info()
