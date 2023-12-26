@@ -1,12 +1,12 @@
 import telebot
 from helper import *
-bot = telebot.TeleBot(token="6482725249:AAEG6jO6tCYQEVfbPeKxkQv1RgPwvJ896q0")
+bot = telebot.TeleBot("6482725249:AAEG6jO6tCYQEVfbPeKxkQv1RgPwvJ896q0")
 
 @bot.message_handler(commands=['start'])
-def home(msg: types.Message):
-    bot.send_message(msg.from_user.id,"""👋 Salom  botimizga xush kelibsiz!
+def home(message):
+    bot.send_message(message.chat.id,f"""👋 Salom {str(message.from_user.first_name)}  botimizga xush kelibsiz!
 
 🔰 Quyidagi menyular orqali botdan foydalaning 👇""")
     
 
-bot.infinity_polling()
+bot.polling() 
