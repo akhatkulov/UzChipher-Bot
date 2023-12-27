@@ -31,8 +31,7 @@ def users_info():
 
 def add_user(cid):
     try:
-        db.execute("""INSERT INTO users(CID)
-            VALUES(?,?)""",(cid))
+        db.execute(f"INSERT INTO users(CID) VALUES({cid})")
     except:
         pass
     db.commit()
@@ -46,11 +45,11 @@ def n_append(id,lang):
 def change_lang(id,lang):
     db.execute("""UPDATE users set LANG = ? WHERE CID = ?""",(lang,id))
     db.commit()
-def add_step(id,step):
-    db.execute("""UPDATE users set STEP = ? WHERE CID = ?""",(id,step))
+def add_step(cid,step):
+    db.execute(f"UPDATE users set STEP = {step} WHERE CID = {cid}")
     db.commit()
-def get_step(id):
-    x = db.cursor("""SELECT STEP FROM users WHERE CID = ?""",(id))
+def get_step(cid):
+    x = db.cursor(f"SELECT STEP FROM users WHERE CID = {cid}")
     return x
 def get_info(id):
     x = db.cursor("""SELECT LANG FROM users WHERE CID = ?""",(id))
