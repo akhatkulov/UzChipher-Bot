@@ -13,21 +13,51 @@ def home(message):
 def uz_panel(message):
     change_lang(message.chat.id,message.text)
     bot.send_message(chat_id=message.chat.id,text="Siz o'zbek tilini tanlandingiz")
-    bot.send_message(chat_id=message.chat.id,text="<b> O'zingizga kerakli shifrlash/kodlash usulini tanlang</b>",parse_mode="HTML")
+    bot.send_message(chat_id=message.chat.id,text="<b> O'zingizga kerakli shifrlash/kodlash usulini tanlang</b>",parse_mode="HTML",reply_markup=uz_menu())
+
 @bot.callback_query_handler(func= lambda callback : callback.data)
-def uz_inline():
+def uz_inline(callback):
     if callback.data == "uz_mirage":
-        bot.send_message(chat_id=callback.data.chat.id,text="Kodlamoqchi bo'lgan matningizni yuboring")
-        add_step(callback.data.chat.id,"uz_mirage")
+        bot.send_message(chat_id=callback.message.chat.id,text="Rejimlardan birini tanlang",reply_markup=uz_mirage_mode())
+
     if callback.data == "uz_morze":
-        bot.send_message(chat_id=callback.data.chat.id,text="Kodlamoqchi bo'lgan matningizni yuboring")
-        add_step(callback.data.chat.id,"uz_morze")
+        bot.send_message(chat_id=callback.data.chat.id,text="Rejimlardan birini tanlang",reply_markup=uz_morse_mode())
+
     if callback.data == "uz_sezar":
-        bot.send_message(chat_id=callback.data.chat.id,text="Shifrlamoqchi bo'lgan matningizni yuboring")
-        add_step(callback.data.chat.id,"uz_sezar")
+        bot.send_message(chat_id=callback.message.chat.id,text="Rejimlardan birini tanlang",reply_markup=uz_sezar_mode())
+
     if callback.data == "uz_hill":
-        bot.send_message(chat_id=callback.data.chat.id,text="Shifrlamoqchi bo'lgan matningizni yuboring")
-        add_step(callback.data.chat.id,"uz_hill")
+        bot.send_message(chat_id=callback.message.chat.id,text="Rejimlardan birini tanlang",reply_markup=uz_hill_mode())
+    
+    
+    if callback.data == "encode_mirage_uz":
+        bot.send_message(chat_id=callback.message.chat.id,text="Kodlamoqchi bo'lgan matningizni yuboring")
+        add_step(callback.message.chat.id,"encode_mirage_uz")
+
+    if callback.data == "decode_mirage_uz":
+        bot.send_message(chat_id=callback.message.chat.id,text="Koddan chiqarmoqchi bo'lgan matningizni yuboring")
+        add_step(callback.message.chat.id,"decode_mirage_uz")
+    
+    if callback.data == "encode_morse_uz":
+        bot.send_message(chat_id=callback.message.chat.id,text="Kodlamoqchi bo'lgan matningizni yuboring")
+        add_step(callback.message.chat.id,"encode_morse_uz")
+    if callback.data == "decode_morse_uz":
+        bot.send_message(chat_id=callback.message.chat.id,text="Koddan chiqarmoqchi bo'lgan matningizni yuboring")
+        add_step(callback.message.chat.id,"encode_morse_uz")
+
+    if callback.data == "encrypt_hill_uz":
+        bot.send_message(chat_id=callback.message.chat.id,text="Shifrlamoqchi bo'lgan matningizni yuboring")
+        add_step(callback.message.chat.id,"encrypt_hill_uz")
+    if callback.data == "decrypt_hill_uz":
+        bot.send_message(chat_id=callback.message.chat.id,text="Shifrdan chiqarmoqchi bo'lgan matningizni yuboring")
+        add_step(callback.message.chat.id,"decrypt_hill_uz")
+    
+    if callback.data == "encrypt_sezar_uz":
+        bot.send_message(chat_id=callback.message.chat.id,text="Shifrlamoqchi bo'lgan matningizni yuboring")
+        add_step(callback.message.chat.id,"encrypt_sezar_uz")
+    if callback.data == "decrypt_sezar_uz":
+        bot.send_message(chat_id=callback.message.chat.id,text="Shifrdan chiqarmoqchi bo'lgan matningizni yuboring")
+        add_step(callback.message.chat.id,"decrypt_sezar_uz")
 
 
 ##################################### Russian Section ###########################################
@@ -36,12 +66,40 @@ def uz_inline():
 def ru_panel(message):
     change_lang(message.chat.id,message.text)
     bot.send_message(chat_id=message.chat.id,text="Вы выбрали русский")
-    bot.send_message(chat_id=message.chat.id,text="<b> Выберите желаемый метод шифрования/декодирования </b>",parse_mode="HTML")
+    bot.send_message(chat_id=message.chat.id,text="<b> Выберите желаемый метод шифрования/декодирования </b>",parse_mode="HTML",reply_markup=ru_menu())
+@bot.callback_query_handler(func= lambda callback : callback.data)
+def ru_inline(callback):
+    if callback.data == "ru_mirage":
+        bot.send_message(chat_id=callback.message.chat.id,text="Выберите один из режимов",reply_markup=ru_mirage_mode())
+
+    if callback.data == "ru_morze":
+        bot.send_message(chat_id=callback.data.chat.id,text="Выберите один из режимов",reply_markup=ru_morse_mode())
+
+    if callback.data == "ru_sezar":
+        bot.send_message(chat_id=callback.message.chat.id,text="Выберите один из режимов",reply_markup=ru_caesar_mode())
+
+    if callback.data == "ru_hill":
+        bot.send_message(chat_id=callback.message.chat.id,text="Выберите один из режимов",reply_markup=ru_hill_mode())
+
 ################################### English Section ####################################################################
 @bot.message_handler(chat_types=['private'],func= lambda x : x.text == "🇬🇧 English")
 def en_panel(message):
     change_lang(message.chat.id,message.text)
     bot.send_message(chat_id=message.chat.id,text="You have selected English")
-    bot.send_message(chat_id=message.chat.id,text="<b> Choose your desired encryption/decoding method</b>",parse_mode="HTML")
+    bot.send_message(chat_id=message.chat.id,text="<b> Choose your desired encryption/decoding method</b>",parse_mode="HTML",reply_markup=en_menu())
+@bot.callback_query_handler(func= lambda callback : callback.data)
+def en_inline(callback):
+    if callback.data == "en_mirage":
+        bot.send_message(chat_id=callback.message.chat.id,text="Choose one of the modes",reply_markup=en_mirage_mode())
+
+    if callback.data == "en_morze":
+        bot.send_message(chat_id=callback.data.chat.id,text="Choose one of the modes",reply_markup=en_morse_mode())
+
+    if callback.data == "en_sezar":
+        bot.send_message(chat_id=callback.message.chat.id,text="Choose one of the modes",reply_markup=en_sezar_mode())
+
+    if callback.data == "en_hill":
+        bot.send_message(chat_id=callback.message.chat.id,text="Choose one of the modes",reply_markup=en_hill_mode())
+
 
 bot.polling()   

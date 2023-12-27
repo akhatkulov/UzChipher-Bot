@@ -7,6 +7,21 @@ db.execute("""CREATE TABLE IF NOT EXISTS users(
     CID INT PRIMARY KEY NOT NULL,
     LANG TEXT DEFAULT "uzbek",
     STEP TEXT DEFAULT "home")""")
+db.execute("""CREATE TABLE IF NOT EXISTS works(
+    CID INT PRIMARY KEY NOT NULL,
+    WORK TEXT
+)""")
+
+def add_work(id,work):
+    try:
+        db.execute("""INSERT INTO users(CID,WORKS)
+            VALUES(?,?)""",(id,work))
+    except:
+        pass
+
+def get_work(id):
+    x = db.cursor("""SELECT WORKS FROM works WHERE CID = ?""",(id))
+    return x
 
 def users_info():
     x = db.execute("""SELECT CID FROM users""")
