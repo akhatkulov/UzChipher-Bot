@@ -4,32 +4,41 @@ db = sqlite3.connect('data/database.db',check_same_thread=False,isolation_level=
 cursor = db.cursor()
 
 db.execute("""CREATE TABLE IF NOT EXISTS users(
-    CID INT PRIMARY KEY NOT NULL,
+    CID INT UNIQUE NOT NULL,
     LANG TEXT DEFAULT "uzbek",
+    WORK1 TEXT DEFAULT "none",
+    WOKR2 TEXT DEFAULT "none",
     STEP TEXT DEFAULT "home")""")
 db.execute("""CREATE TABLE IF NOT EXISTS works(
+    CID INT PRIMARY KEY NOT NULL,
+    WORK TEXT
+)""")
+db.execute("""CREATE TABLE IF NOT EXISTS works2(
     CID INT PRIMARY KEY NOT NULL,
     WORK TEXT
 )""")
 
 
 def add_step(cid,step):
-    db.execute(f"UPDATE users SET step ={step} WHERE chat_id={cid}")
+    db.execute(f"UPDATE users SET step=? WHERE cid=?",(str(step),int(cid)))
     db.commit()
 def get_step(cid):
-    x = db.cursor(f"SELECT STEP FROM users WHERE CID = {cid}")
-    return x
+    x = cursor.execute(f"SELECT * FROM users WHERE cid={cid}")
+    return x.fetchone()[3]
 
-def add_work(id,work):
-    try:
-        db.execute("""INSERT INTO users(CID,WORKS)
-            VALUES(?,?)""",(id,work))
-    except:
-        pass
+def add_work1(cid,work):
+    db.execute(f"UPDATE users SET work1={str(work)} WHERE cid={int(cid)}")
+    db.commit()
+def get_work1(cid):
+    x = cursor.execute(f"SELECT * FROM users WHERE cid={cid}")
+    return x.fetchone()[2]
+def add_work2(cid,work):
+    db.execute(f"UPDATE users SET work2={work} WHERE cid={cid}")
+    db.commit()
+def get_work2(cid):
+    x = cursor.execute(f"SELECT * FROM users WHERE cid={cid}")
+    return x.fetchone()[3]
 
-def get_work(id):
-    x = db.cursor("""SELECT WORKS FROM works WHERE CID = ?""",(id))
-    return x
 
 def users_info():
     x = db.execute("""SELECT CID FROM users""")
@@ -39,7 +48,7 @@ def users_info():
 
 def add_user(cid):
     try:
-        db.execute(f"INSERT INTO users(CID,STEP) VALUES({cid},'encode_mirage_uz')")
+        db.execute(f"INSERT INTO users(CID) VALUES({cid})")
     except:
         pass
     db.commit()
@@ -56,4 +65,3 @@ def change_lang(id,lang):
 
 def get_info(id):
     x = db.cursor("""SELECT LANG FROM users WHERE CID = ?""",(id))
-users_info()
