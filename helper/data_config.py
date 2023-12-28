@@ -1,6 +1,6 @@
 import sqlite3
 
-db = sqlite3.connect('data/database.db',check_same_thread=False)
+db = sqlite3.connect('data/database.db',check_same_thread=False,isolation_level=None)
 cursor = db.cursor()
 
 db.execute("""CREATE TABLE IF NOT EXISTS users(
@@ -11,6 +11,14 @@ db.execute("""CREATE TABLE IF NOT EXISTS works(
     CID INT PRIMARY KEY NOT NULL,
     WORK TEXT
 )""")
+
+
+def add_step(cid,step):
+    db.execute(f"UPDATE users SET step ={step} WHERE chat_id={cid}")
+    db.commit()
+def get_step(cid):
+    x = db.cursor(f"SELECT STEP FROM users WHERE CID = {cid}")
+    return x
 
 def add_work(id,work):
     try:
@@ -31,7 +39,7 @@ def users_info():
 
 def add_user(cid):
     try:
-        db.execute(f"INSERT INTO users(CID) VALUES({cid})")
+        db.execute(f"INSERT INTO users(CID,STEP) VALUES({cid},'encode_mirage_uz')")
     except:
         pass
     db.commit()
@@ -45,12 +53,7 @@ def n_append(id,lang):
 def change_lang(id,lang):
     db.execute("""UPDATE users set LANG = ? WHERE CID = ?""",(lang,id))
     db.commit()
-def add_step(cid,step):
-    db.execute(f"UPDATE users set STEP = {step} WHERE CID = {cid}")
-    db.commit()
-def get_step(cid):
-    x = db.cursor(f"SELECT STEP FROM users WHERE CID = {cid}")
-    return x
+
 def get_info(id):
     x = db.cursor("""SELECT LANG FROM users WHERE CID = ?""",(id))
 users_info()
