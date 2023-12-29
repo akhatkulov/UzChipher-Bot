@@ -65,8 +65,7 @@ def uz_inline(callback):
 def uz_panel(message):
     step = get_step(message.chat.id)
     if step == "home":
-        time.sleep(3)
-        bot.send_message(chat_id=message.chat.id,text="<b> O'zingizga kerakli shifrlash/kodlash usulini tanlang</b>",parse_mode="HTML",reply_markup=uz_menu())
+        pluser()
     if step=="encode_mirage_uz":
         bot.send_message(chat_id=message.chat.id,text=f"<b>Sizning matningiz muvaffaqiyatli kodlandi \n\n</b> <b>Asl Matn: </b> <code>{message.text}</code> \n<b>Kodlangan matn: </b><code>{en_mirage(message.text)}</code>",parse_mode="HTML")
         add_step(message.chat.id,"home")
@@ -178,8 +177,7 @@ def ru_inline(callback):
 def ru_panel(message):
     step = get_step(message.chat.id)
     if step == "home_ru":
-        time.sleep(3)
-        bot.send_message(chat_id=message.chat.id,text="<b> Выберите желаемый метод шифрования/кодирования</b>",parse_mode="HTML",reply_markup=uz_menu())
+         pluser()
     if step=="encode_mirage_ru":
         bot.send_message(chat_id=message.chat.id,text=f"<b>Ваш текст успешно закодирован \n\n</b> <b>Исходный текст: </b> <code>{message.text}</code> \n<b>Закодированный текст: </b >< code>{en_mirage(message.text)}</code>",parse_mode="HTML")
         add_step(message.chat.id,"home_ru")
@@ -260,8 +258,7 @@ def en_inline(callback):
 def en_panel(message):
     step = get_step(message.chat.id)
     if step == "home_en":
-        time.sleep(3)
-        bot.send_message(chat_id=message.chat.id,text="<b> Choose your desired encryption/encoding method</b>",parse_mode="HTML",reply_markup=en_menu())
+        pluser()
     if step=="encode_mirage_en":
         bot.send_message(chat_id=message.chat.id,text=f"<b>Your text has been successfully encoded \n\n</b> <b>Original Text: </b> <code>{message.text}< /code> \n<b>Encoded text: </b><code>{en_mirage(message.text)}</code>",parse_mode="HTML")
         add_step(message.chat.id,"home_en")

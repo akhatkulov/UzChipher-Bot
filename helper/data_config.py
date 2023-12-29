@@ -9,7 +9,12 @@ db.execute("""CREATE TABLE IF NOT EXISTS users(
     WORK1 TEXT DEFAULT "none",
     WOKR2 TEXT DEFAULT "none",
     STEP TEXT DEFAULT "home")""")
+db.execute("CREATE TABLE IF NOT EXISTS stat(ID INT UNIQUE DEFAULT 1, WORK INT DEFAULT 1)")
 
+def pluser():
+    x = db.cursor("SELECT work FROM stat WHERE id=1")
+    x+=1
+    db.execute("UPDATE stat SET work=? WHERE id=1",(x))
 
 def add_step(cid,step):
     db.execute(f"UPDATE users SET step=? WHERE cid=?",(str(step),int(cid)))
