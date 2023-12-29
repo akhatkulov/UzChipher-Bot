@@ -79,12 +79,37 @@ def uz_panel(message):
     if step=="decode_morse_uz":
         bot.send_message(chat_id=message.chat.id,text=f"<b>Sizning matningiz muvaffaqiyatli koddan chiqarildi \n\n</b><b>Kodlangan matn: </b><code>{message.text}</code>\n<b>Natija: </b><code>{morse_to_text(message.text)}</code>",parse_mode="HTML")
         add_step(message.chat.id,"home")
+
     if step == "encrypt_hill_uz":
         add_work1(message.chat.id,message.text)
         bot.send_message(chat_id=message.chat.id,text="Parolingizni yuboring",parse_mode="HTML")
         add_step(message.chat.id,"hill_2_uz")
     if step == "hill_2_uz":
-        bot.send_message(chat_id=message.chat.id,text=f"{get_work1(message.chat.id)} {hillEncrypt(get_work1(message.chat.id),message.text)}")
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Asl matn: </b><code>{get_work1(message.chat.id)}</code>\n<b>Parol: </b><code>{message.text}</code>\n<b>Natija: </b><code>{hillEncrypt(get_work1(message.chat.id),message.text)} </code>",parse_mode="HTML")
+        add_step(message.chat.id,"home")
+
+    if step == "decrypt_hill_uz":
+        add_work1(message.chat.id,message.text)
+        bot.send_message(chat_id=message.chat.id,text="Parolingizni yuboring",parse_mode="HTML")
+        add_step(message.chat.id,"hill_de_uz")
+    if step == "hill_de_uz":
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Shifrlangan matn: </b><code>{get_work1(message.chat.id)}</code>\n<b>Parol: </b><code>{message.text}</code>\n<b>Natija: </b><code>{hillDecrypt(get_work1(message.chat.id),message.text)} </code>",parse_mode="HTML")
+        add_step(message.chat.id,"home")
+
+    if step == "encrypt_sezar_uz":
+        add_work1(message.chat.id,message.text)
+        bot.send_message(chat_id=message.chat.id,text="Parolingizni yuboring",parse_mode="HTML")
+        add_step(message.chat.id,"sezar_2_uz")
+    if step == "sezar_2_uz":
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Asl matn: </b><code>{get_work1(message.chat.id)}</code>\n<b>Parol: </b><code>{message.text}</code>\n<b>Natija: </b><code>{caesar_encipher(get_work1(message.chat.id),message.text)} </code>",parse_mode="HTML")
+        add_step(message.chat.id,"home")
+
+    if step == "decrypt_sezar_uz":
+        add_work1(message.chat.id,message.text)
+        bot.send_message(chat_id=message.chat.id,text="Parolingizni yuboring",parse_mode="HTML")
+        add_step(message.chat.id,"sezar_de_uz")
+    if step == "sezar_de_uz":
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Shifrlangan matn: </b><code>{get_work1(message.chat.id)}</code>\n<b>Parol: </b><code>{message.text}</code>\n<b>Natija: </b><code>{caesar_decipher(get_work1(message.chat.id),message.text)} </code>",parse_mode="HTML")
         add_step(message.chat.id,"home")
 ##################################### Russian Section ###########################################
 
