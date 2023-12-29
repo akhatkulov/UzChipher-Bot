@@ -77,7 +77,7 @@ def ru_morse_mode():
   return key
 def ru_hill_mode():
   key = types.InlineKeyboardMarkup(row_width=2)
-  btn1 = types.InlineKeyboardButton(text="Шифровать",callback_data="encrypt_hill_uz")
+  btn1 = types.InlineKeyboardButton(text="Шифровать",callback_data="encrypt_hill_ru")
   btn2 = types.InlineKeyboardButton(text="Расшифровать",callback_data="decrypt_hill_ru")
   key.add(btn1,btn2)
   return key
