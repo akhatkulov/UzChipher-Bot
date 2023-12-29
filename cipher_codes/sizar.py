@@ -23,7 +23,7 @@ def caesar_decipher(input, key):
         key = int(key)
         return caesar_encipher(input, 26 - key)
     except:
-        return "Error 1"
+        return "Error"
 
 
 

@@ -44,5 +44,5 @@ def hillDecrypt(text, key):
 
         return decryptedText
     except:
-        return "Error 1"
+        return "Error"
 

@@ -74,7 +74,7 @@ def uz_inline(callback):
         bot.send_message(chat_id=callback.message.chat.id,text="Выберите один из режимов",reply_markup=ru_mirage_mode())
 
     if callback.data == "ru_morze":
-        bot.send_message(chat_id=callback.data.chat.id,text="Выберите один из режимов",reply_markup=ru_morse_mode())
+        bot.send_message(chat_id=callback.message.chat.id,text="Выберите один из режимов",reply_markup=ru_morse_mode())
 
     if callback.data == "ru_sezar":
         bot.send_message(chat_id=callback.message.chat.id,text="Выберите один из режимов",reply_markup=ru_caesar_mode())
@@ -110,46 +110,17 @@ def uz_inline(callback):
     if callback.data == "decrypt_sezar_ru":
         bot.send_message(chat_id=callback.message.chat.id,text="Отправьте текст, который хотите расшифровать")
         add_step(callback.message.chat.id,"decrypt_sezar_ru")
-    if callback.data == "ru_mirage":
-        bot.send_message(chat_id=callback.message.chat.id,text="Выберите один из режимов",reply_markup=ru_mirage_mode())
+    if callback.data == "en_mirage":
+        bot.send_message(chat_id=callback.message.chat.id,text="Choose one of the modes",reply_markup=en_mirage_mode())
 
-    if callback.data == "ru_morze":
-        bot.send_message(chat_id=callback.data.chat.id,text="Выберите один из режимов",reply_markup=ru_morse_mode())
+    if callback.data == "en_morze":
+        bot.send_message(chat_id=callback.message.chat.id,text="Choose one of the modes",reply_markup=en_morse_mode())
 
-    if callback.data == "ru_sezar":
-        bot.send_message(chat_id=callback.message.chat.id,text="Выберите один из режимов",reply_markup=ru_caesar_mode())
+    if callback.data == "en_sezar":
+        bot.send_message(chat_id=callback.message.chat.id,text="Choose one of the modes",reply_markup=en_sezar_mode())
 
-    if callback.data == "ru_hill":
-        bot.send_message(chat_id=callback.message.chat.id,text="Выберите один из режимов",reply_markup=ru_hill_mode())
-    
-    if callback.data == "encode_mirage_ru":
-        bot.send_message(chat_id=callback.message.chat.id,text=f"Отправьте текст, который вы хотите закодировать")
-        add_step(callback.message.chat.id,"encode_mirage_ru")
-
-    if callback.data == "decode_mirage_ru":
-        bot.send_message(chat_id=callback.message.chat.id,text="Отправьте текст, который хотите расшифровать")
-        add_step(callback.message.chat.id,"decode_mirage_ru")
-    
-    if callback.data == "encode_morse_ru":
-        bot.send_message(chat_id=callback.message.chat.id,text="Отправьте текст, который вы хотите закодировать")
-        add_step(callback.message.chat.id,"encode_morse_ru")
-    if callback.data == "decode_morse_ru":
-        bot.send_message(chat_id=callback.message.chat.id,text="Отправьте текст, который хотите расшифровать")
-        add_step(callback.message.chat.id,"encode_morse_ru")
-
-    if callback.data == "encrypt_hill_ru":
-        bot.send_message(chat_id=callback.message.chat.id,text="Отправьте текст, который вы хотите зашифровать")
-        add_step(callback.message.chat.id,"encrypt_hill_ru")
-    if callback.data == "decrypt_hill_ru":
-        bot.send_message(chat_id=callback.message.chat.id,text="Отправьте текст, который хотите расшифровать")
-        add_step(callback.message.chat.id,"decrypt_hill_ru")
-    
-    if callback.data == "encrypt_sezar_ru":
-        bot.send_message(chat_id=callback.message.chat.id,text="Отправьте текст, который хотите расшифровать")
-        add_step(callback.message.chat.id,"encrypt_sezar_ru")
-    if callback.data == "decrypt_sezar_ru":
-        bot.send_message(chat_id=callback.message.chat.id,text="Отправьте текст, который хотите расшифровать")
-        add_step(callback.message.chat.id,"decrypt_sezar_ru")
+    if callback.data == "en_hill":
+        bot.send_message(chat_id=callback.message.chat.id,text="Choose one of the modes",reply_markup=en_hill_mode())
 
 @bot.message_handler()
 def uz_panel(message):
