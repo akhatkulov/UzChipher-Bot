@@ -38,13 +38,6 @@ def get_work2(cid):
     x = cursor.execute(f"SELECT * FROM users WHERE cid={cid}")
     return x.fetchone()[3]
 
-
-def users_info():
-    x = db.execute("""SELECT CID FROM users""")
-    x.fetchall()
-    print(x)
-    return x
-
 def add_user(cid):
     try:
         db.execute(f"INSERT INTO users(CID) VALUES({cid})")
@@ -58,9 +51,10 @@ def n_append(id,lang):
         VALUES(?,?)""",(id,lang))
     db.commit()
 
-def change_lang(id,lang):
-    db.execute("""UPDATE users set LANG = ? WHERE CID = ?""",(lang,id))
+def change_lang(cid,lang):
+    db.execute("""UPDATE users SET lang=? WHERE cid =?""",(lang,cid))
     db.commit()
 
-def get_info(id):
-    x = db.cursor("""SELECT LANG FROM users WHERE CID = ?""",(id))
+def get_lang(cid):
+    x = db.cursor("""SELECT LANG FROM users WHERE CID = ?""",(cid))
+    return x
