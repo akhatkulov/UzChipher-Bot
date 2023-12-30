@@ -15,7 +15,7 @@ def caesar_encipher(input, key):
             output += caesar_cipher(ch, key)
         return output
     except:
-        return "Error 1"
+        return "Error"
 
 
 def caesar_decipher(input, key):

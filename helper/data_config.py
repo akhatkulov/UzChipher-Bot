@@ -22,7 +22,7 @@ def add_step(cid,step):
     db.execute(f"UPDATE users SET step=? WHERE cid=?",(str(step),int(cid)))
     db.commit()
 def get_step(cid):
-    x = cursor.execute(f"SELECT * FROM users WHERE cid={cid}")
+    x = db.execute(f"SELECT * FROM users WHERE cid={cid}")
     return x.fetchone()[4]
 
 def add_work1(cid,work):
