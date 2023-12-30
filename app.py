@@ -3,7 +3,7 @@ import telebot
 from helper import *
 from cipher_codes import *
 bot = telebot.TeleBot("6482725249:AAEG6jO6tCYQEVfbPeKxkQv1RgPwvJ896q0")
-
+admin_id = 789945598
 @bot.message_handler(commands=['start','lang'])
 def home(message):
     bot.send_message(chat_id=message.chat.id, text=f"👋Choose your language👇",reply_markup=lang_button())
@@ -123,6 +123,33 @@ def uz_inline(callback):
 
     if callback.data == "en_hill":
         bot.send_message(chat_id=callback.message.chat.id,text="Choose one of the modes",reply_markup=en_hill_mode())
+    if callback.data == "encrypt_hill_en":
+        bot.send_message(chat_id=callback.message.chat.id,text="Send the text you want to encrypt")
+        add_step(callback.message.chat.id,"encrypt_hill_en")
+    if callback.data == "decrypt_hill_en":
+        bot.send_message(chat_id=callback.message.chat.id,text="Send the text you want to decrypt")
+        add_step(callback.message.chat.id,"decrypt_hill_en")
+    
+    if callback.data == "encrypt_sezar_en":
+        bot.send_message(chat_id=callback.message.chat.id,text="Send the text you want to encrypt")
+        add_step(callback.message.chat.id,"encrypt_sezar_en")
+    if callback.data == "decrypt_sezar_en":
+        bot.send_message(chat_id=callback.message.chat.id,text="Send the text you want to decrypt")
+        add_step(callback.message.chat.id,"decrypt_sezar_en")
+    if callback.data == "encode_mirage_uz":
+        bot.send_message(chat_id=callback.message.chat.id,text=f"Send the text you want to encode")
+        add_step(callback.message.chat.id,"encode_mirage_uz")
+
+    if callback.data == "decode_mirage_en":
+        bot.send_message(chat_id=callback.message.chat.id,text="Send the text you want to decode")
+        add_step(callback.message.chat.id,"decode_mirage_en")
+    
+    if callback.data == "encode_morse_en":
+        bot.send_message(chat_id=callback.message.chat.id,text="Send the text you want to encode")
+        add_step(callback.message.chat.id,"encode_morse_en")
+    if callback.data == "decode_morse_en":
+        bot.send_message(chat_id=callback.message.chat.id,text="Send the text you want to decode")
+        add_step(callback.message.chat.id,"encode_morse_en")
 
 @bot.message_handler()
 def uz_state(message):
@@ -356,15 +383,28 @@ def uz_state(message):
         bot.send_message(chat_id=message.chat.id,text="Send one of the numbers from 1 to 27",parse_mode="HTML")
         add_step(message.chat.id,"sezar_de_en")
       
-    if step == "sezar_de_uz":
+    if step == "sezar_de_en":
         if "Error" != caesar_decipher(get_work1(message.chat.id),message.text):
             bot.send_message(chat_id=message.chat.id,text=f"<b>Encrypted text: </b><code>{get_work1(message.chat.id)}</code>\n<b>Password: </b><code>{message.text}</code>\n<b>Result: </b><code>{caesar_decipher(get_work1(message.chat.id),message.text)} </code >",parse_mode="HTML")
             add_step(message.chat.id,"home_en")
         else:
             bot.send_message(chat_id=message.chat.id,text="You made an error. Learn how to use the bot! /help -- send this command!")
+    
 
+    if message.text == "/admin" and message.chat.id == admin:
+        bot.send_message(chat_id=admin,text="Bo'limlardan birini tanlang",reply_markup=admin_buttons())
 
-
-
+    if message.text == "Statistika":
+        bot.send_message(chat_id=admin,text="Statistika: ")
+    if message.text == "Xabar yuborish" and message.chat.id == admin:
+        adver = bot.send_message(user_id,
+                                 "<b>✍️ Xabar matnini kiritng !</b>",
+                                 reply_markup=key)
+        bot.register_next_step_handler(adver, ads_send)
+    if message.text == "Forward Xabar yuborish":
+        adver = bot.send_message(user_id,
+                                 "<b>✍️ Xabar matnini kiritng !</b>",
+                                 reply_markup=key)
+        bot.register_next_step_handler(adver, for_send)
 
 bot.polling()

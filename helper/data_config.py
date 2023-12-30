@@ -47,7 +47,37 @@ def add_user(cid):
         pass
     db.commit()
 
+def ads_send(message):
+    try:
+        text = message.text
+        if text=="🚫 Bekor qilish":
+            bot.send_photo(message.chat.id,photo="https://t.me/the_solodest/178",caption="🚫 Xabar yuborish bekor qilindi !",reply_markup=back)
+        else:
+            cursor.execute("SELECT cid FROM users")
+            rows = cursor.fetchall()
+            for i in rows:
+                chat_id = i[0]
+                print(chat_id)
+                bot.send_message(chat_id,message.text)
+            bot.send_photo(ADMIN_ID,photo="https://t.me/the_solodest/178",caption="<b>✅ Xabar hamma foydalanuvchiga yuborildi!</b>",reply_markup=back)
+    except:
+        pass
 
+def for_send(message):
+    text = message.text
+    if text == "🚫 Bekor qilish":
+        bot.send_photo(message.chat.id,photo="https://t.me/the_solodest/178",caption="🚫 Xabar yuborish bekor qilindi!", reply_markup=back)
+    else:
+        cursor.execute("SELECT cid FROM users")
+        rows = cursor.fetchall()
+        for row in rows:
+            try:
+                chat_id = row[0]
+                print(chat_id)
+                bot.forward_message(chat_id, ADMIN_ID, message.message_id)
+            except Exception as e:
+                print(e)
+        bot.send_message(ADMIN_ID, "✅ Xabar hamma foydalanuvchiga yuborildi!", reply_markup=back)
 def n_append(id,lang):
     db.execute("""INSERT INTO users(CID,LANG)
         VALUES(?,?)""",(id,lang))

@@ -1,6 +1,13 @@
 import telebot 
 from telebot import types
 
+def admin_buttons():
+  key = types.ReplyKeyboardMarkup(resize_keyboard=True,row_width=2)
+  btn1 = types.KeyboardButton(text="Statistika")
+  btn2 = types.KeyboardButton(text="Xabar yuborish")
+  btn3 = types.KeyboardButton(text="Forward Xabar yuborish")
+  key.add(btn1,btn2,btn3)
+  return key
 
 def lang_button():
   lang = types.ReplyKeyboardMarkup(resize_keyboard=True,row_width=3)
