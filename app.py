@@ -391,20 +391,16 @@ def uz_state(message):
             bot.send_message(chat_id=message.chat.id,text="You made an error. Learn how to use the bot! /help -- send this command!")
     
 
-    if message.text == "/admin" and message.chat.id == admin:
-        bot.send_message(chat_id=admin,text="Bo'limlardan birini tanlang",reply_markup=admin_buttons())
+    if message.text == "/admin" and message.chat.id == admin_id:
+        bot.send_message(chat_id=admin_id,text="Bo'limlardan birini tanlang",reply_markup=admin_buttons())
 
     if message.text == "Statistika":
-        bot.send_message(chat_id=admin,text="Statistika: ")
-    if message.text == "Xabar yuborish" and message.chat.id == admin:
-        adver = bot.send_message(user_id,
-                                 "<b>✍️ Xabar matnini kiritng !</b>",
-                                 reply_markup=key)
+        bot.send_message(chat_id=admin_id,text=f"Statistika: {get_stat()}")
+    if message.text == "Xabar yuborish" and message.chat.id == admin_id:
+        adver = bot.send_message(chat_id=admin_id,text="<b>✍️ Xabar matnini kiritng !</b>")
         bot.register_next_step_handler(adver, ads_send)
-    if message.text == "Forward Xabar yuborish":
-        adver = bot.send_message(user_id,
-                                 "<b>✍️ Xabar matnini kiritng !</b>",
-                                 reply_markup=key)
+    if message.text == "Forward Xabar yuborish" and message.chat.id == admin_id:
+        adver = bot.send_message(chat_id=admin_id,text="<b>✍️ Xabar matnini kiritng !</b>")
         bot.register_next_step_handler(adver, for_send)
 
 bot.polling()

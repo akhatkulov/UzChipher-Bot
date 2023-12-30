@@ -1,4 +1,8 @@
 import sqlite3
+import telebot
+
+bot = telebot.TeleBot("6482725249:AAEG6jO6tCYQEVfbPeKxkQv1RgPwvJ896q0")
+admin_id = 789945598
 
 db = sqlite3.connect('data/database.db',check_same_thread=False,isolation_level=None)
 cursor = db.cursor()
@@ -51,7 +55,7 @@ def ads_send(message):
     try:
         text = message.text
         if text=="🚫 Bekor qilish":
-            bot.send_photo(message.chat.id,photo="https://t.me/the_solodest/178",caption="🚫 Xabar yuborish bekor qilindi !",reply_markup=back)
+            bot.send_photo(message.chat.id,photo="https://t.me/the_solodest/178",caption="🚫 Xabar yuborish bekor qilindi !")
         else:
             cursor.execute("SELECT cid FROM users")
             rows = cursor.fetchall()
@@ -59,14 +63,17 @@ def ads_send(message):
                 chat_id = i[0]
                 print(chat_id)
                 bot.send_message(chat_id,message.text)
-            bot.send_photo(ADMIN_ID,photo="https://t.me/the_solodest/178",caption="<b>✅ Xabar hamma foydalanuvchiga yuborildi!</b>",reply_markup=back)
+            bot.send_photo(admin_id,photo="https://t.me/the_solodest/178",caption="<b>✅ Xabar hamma foydalanuvchiga yuborildi!</b>")
     except:
         pass
-
+def get_stat():
+    cursor.execute("SELECT COUNT(CID) FROM users")
+    rows = cursor.fetchall()
+    return rows[0][0]
 def for_send(message):
     text = message.text
     if text == "🚫 Bekor qilish":
-        bot.send_photo(message.chat.id,photo="https://t.me/the_solodest/178",caption="🚫 Xabar yuborish bekor qilindi!", reply_markup=back)
+        bot.send_photo(message.chat.id,photo="https://t.me/the_solodest/178",caption="🚫 Xabar yuborish bekor qilindi!")
     else:
         cursor.execute("SELECT cid FROM users")
         rows = cursor.fetchall()
@@ -74,14 +81,10 @@ def for_send(message):
             try:
                 chat_id = row[0]
                 print(chat_id)
-                bot.forward_message(chat_id, ADMIN_ID, message.message_id)
+                bot.forward_message(chat_id, admin_id, message.message_id)
             except Exception as e:
                 print(e)
-        bot.send_message(ADMIN_ID, "✅ Xabar hamma foydalanuvchiga yuborildi!", reply_markup=back)
-def n_append(id,lang):
-    db.execute("""INSERT INTO users(CID,LANG)
-        VALUES(?,?)""",(id,lang))
-    db.commit()
+        bot.send_message(admin_id, "✅ Xabar hamma foydalanuvchiga yuborildi!")
 
 def change_lang(cid,lang):
     db.execute("""UPDATE users SET lang=? WHERE cid =?""",(lang,cid))
