@@ -11,21 +11,23 @@ def home(message):
 
 
 ##################################### Uzbek Section #####################################
-@bot.message_handler(chat_types=['private'])
+@bot.message_handler(chat_types=['private'],func= lambda x : x.text == "🇺🇿 Uzbek")
 def uz_panel(message):
-    if message.text == "🇺🇿 Uzbek":
-        change_lang(message.chat.id,message.text)
-        bot.send_message(chat_id=message.chat.id,text="Siz o'zbek tilini tanlandingiz")
-        bot.send_message(chat_id=message.chat.id,text="<b> O'zingizga kerakli shifrlash/kodlash usulini tanlang</b>",parse_mode="HTML",reply_markup=uz_menu())
-    if message.text == "🇷🇺 Russian":
-        change_lang(message.chat.id,message.text)
-        bot.send_message(chat_id=message.chat.id,text="Вы выбрали русский")
-        bot.send_message(chat_id=message.chat.id,text="<b> Выберите желаемый метод шифрования/декодирования </b>",parse_mode="HTML",reply_markup=ru_menu())
-    if message.text == "🇬🇧 English":
-        change_lang(message.chat.id,message.text)
-        bot.send_message(chat_id=message.chat.id,text="You have selected English")
-        bot.send_message(chat_id=message.chat.id,text="<b> Choose your desired encryption/decoding method</b>",parse_mode="HTML",reply_markup=en_menu())
+    change_lang(message.chat.id,message.text)
+    bot.send_message(chat_id=message.chat.id,text="Siz o'zbek tilini tanlandingiz")
+    bot.send_message(chat_id=message.chat.id,text="<b> O'zingizga kerakli shifrlash/kodlash usulini tanlang</b>",parse_mode="HTML",reply_markup=uz_menu())
+@bot.message_handler(chat_types=['private'],func= lambda x : x.text == "🇷🇺 Russian")
+def ru_panel(message):
+    change_lang(message.chat.id,message.text)
+    bot.send_message(chat_id=message.chat.id,text="Вы выбрали русский")
+    bot.send_message(chat_id=message.chat.id,text="<b> Выберите желаемый метод шифрования/декодирования </b>",parse_mode="HTML",reply_markup=ru_menu())
 
+    
+@bot.message_handler(chat_types=['private'],func= lambda x : x.text == "🇬🇧 English")  
+def en_panel(message):
+    change_lang(message.chat.id,message.text)
+    bot.send_message(chat_id=message.chat.id,text="You have selected English")
+    bot.send_message(chat_id=message.chat.id,text="<b> Choose your desired encryption/decoding method</b>",parse_mode="HTML",reply_markup=en_menu())
 
 @bot.callback_query_handler(func= lambda callback : callback.data)
 def uz_inline(callback):
@@ -123,7 +125,7 @@ def uz_inline(callback):
         bot.send_message(chat_id=callback.message.chat.id,text="Choose one of the modes",reply_markup=en_hill_mode())
 
 @bot.message_handler()
-def uz_panel(message):
+def uz_state(message):
     step = get_step(message.chat.id)
     if step == "home":
         pluser()
@@ -184,17 +186,17 @@ def uz_panel(message):
             add_step(message.chat.id,"home")
         else:
             bot.send_message(chat_id=message.chat.id,text="Siz xatoga yo'l qo'ydingiz. Botdan qanday foydalanish haqida tanishib chiqing! /help -- ushbu buyruqni yuboring!")
-##################################### Russian Section ###########################################
+
     if step == "home_ru":
          pluser()
     if step=="encode_mirage_ru":
-        bot.send_message(chat_id=message.chat.id,text=f"<b>Ваш текст успешно закодирован \n\n</b> <b>Исходный текст: </b> <code>{message.text}</code> \n<b>Закодированный текст: </b >< code>{en_mirage(message.text)}</code>",parse_mode="HTML")
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Ваш текст успешно закодирован \n\n</b> <b>Исходный текст: </b> <code>{message.text}</code> \n<b>Закодированный текст: </b ><code>{en_mirage(message.text)}</code>",parse_mode="HTML")
         add_step(message.chat.id,"home_ru")
     if step=="decode_mirage_ru":
         bot.send_message(chat_id=message.chat.id,text=f"<b>Ваш текст успешно декодирован \n\n</b><b>Закодированный текст: </b><code>{message.text}</code>\n<b>Результат: </b> <code>{de_mirage(message.text)}</code>",parse_mode="HTML")
         add_step(message.chat.id,"home_ru")
     if step=="encode_morse_ru":
-        bot.send_message(chat_id=message.chat.id,text=f"<b>Ваш текст успешно закодирован \n\n</b> <b>Исходный текст: </b> <code>{message.text}</code> \n<b>Закодированный текст: </b >< code>{text_to_morse(message.text)}</code>",parse_mode="HTML")
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Ваш текст успешно закодирован \n\n</b> <b>Исходный текст: </b> <code>{message.text}</code> \n<b>Закодированный текст: </b ><code>{text_to_morse(message.text)}</code>",parse_mode="HTML")
         add_step(message.chat.id,"home_ru")
     if step=="decode_morse_ru":
         bot.send_message(chat_id=message.chat.id,text=f"<b>Ваш текст успешно декодирован \n\n</b><b>Закодированный текст: </b><code>{message.text}</code>\n<b>Результат: </b> <code>{morse_to_text(message.text)}</code></code>",parse_mode="HTML")
@@ -303,4 +305,66 @@ def uz_panel(message):
             add_step(message.chat.id,"home_en")
         else:
             bot.send_message(chat_id=message.chat.id,text="You made an error. Learn how to use the bot! /help -- send this command!")
-bot.polling()   
+    if step == "home_en":
+        pluser()
+    if step=="encode_mirage_en":
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Your text has been successfully encoded \n\n</b> <b>Original Text: </b> <code>{message.text}< /code> \n<b>Encoded text: </b><code>{en_mirage(message.text)}</code>",parse_mode="HTML")
+        add_step(message.chat.id,"home_en")
+    if step=="decode_mirage_en":
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Your text has been decoded successfully \n\n</b><b>Encoded text: </b><code>{message.text} </code>\n<b>Result: </b><code>{de_mirage(message.text)}</code>",parse_mode="HTML")
+        add_step(message.chat.id,"home_en")
+    if step=="encode_morse_en":
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Your text has been successfully encoded \n\n</b> <b>Original Text: </b> <code>{message.text}< /code> \n<b>Encoded text: </b><code>{text_to_morse(message.text)}</code>",parse_mode="HTML")
+        add_step(message.chat.id,"home_en")
+    if step=="decode_morse_en":
+        bot.send_message(chat_id=message.chat.id,text=f"<b>Your text has been decoded successfully \n\n</b><b>Encoded text: </b><code>{message.text} </code>\n<b>Result: </b><code>{morse_to_text(message.text)}</code>",parse_mode="HTML")
+        add_step(message.chat.id,"home_en")
+    if step == "encrypt_hill_en":
+        add_work1(message.chat.id,message.text)
+        bot.send_message(chat_id=message.chat.id,text="Send your password",parse_mode="HTML")
+        add_step(message.chat.id,"hill_2_en")
+    if step == "hill_2_en":
+        if "Error"!=hillEncrypt(get_work1(message.chat.id),message.text):
+                bot.send_message(chat_id=message.chat.id,text=f"<b>Original text: </b><code>{get_work1(message.chat.id)}</code>\n<b>Password: </b><code>{message.text}</code>\n<b>Result: </b><code>{hillEncrypt(get_work1(message.chat.id),message.text)} </code >",parse_mode="HTML")
+                add_step(message.chat.id,"home_en")
+        else:
+            bot.send_message(chat_id=message.chat.id,text="You made an error. Learn how to use the bot! /help -- send this command!")
+
+    if step == "decrypt_hill_en":
+        add_work1(message.chat.id,message.text)
+        bot.send_message(chat_id=message.chat.id,text="Send your password",parse_mode="HTML")
+        add_step(message.chat.id,"hill_de_en")
+    if step == "hill_de_en":
+        if "Error"!=hillDecrypt(get_work1(message.chat.id),message.text):
+            bot.send_message(chat_id=message.chat.id,text=f"<b>Encrypted text: </b><code>{get_work1(message.chat.id)}</code>\n<b>Password: </b><code>{message.text}</code>\n<b>Result: </b><code>{hillDecrypt(get_work1(message.chat.id),message.text)} </code >",parse_mode="HTML")
+            add_step(message.chat.id,"home_en")
+        else:
+            bot.send_message(chat_id=message.chat.id,text="You made an error. Learn how to use the bot! /help -- send this command!")
+    if step == "encrypt_sezar_en":
+        add_work1(message.chat.id,message.text)
+        bot.send_message(chat_id=message.chat.id,text="Enter a number from 1 to 27. For example: 17",parse_mode="HTML")
+        add_step(message.chat.id,"sezar_2_en")
+    if step == "sezar_2_en":
+        if "Error"!=caesar_encipher(get_work1(message.chat.id),message.text):
+            bot.send_message(chat_id=message.chat.id,text=f"<b>Original text: </b><code>{get_work1(message.chat.id)}</code>\n<b>Password: </b><code>{message.text}</code>\n<b>Result: </b><code>{caesar_encipher(get_work1(message.chat.id),message.text)} </code >",parse_mode="HTML")
+            add_step(message.chat.id,"home_en")
+        else:
+            bot.send_message(chat_id=message.chat.id,text="You made an error. Learn how to use the bot! /help -- send this command!")
+
+    if step == "decrypt_sezar_en":
+        add_work1(message.chat.id,message.text)
+        bot.send_message(chat_id=message.chat.id,text="Send one of the numbers from 1 to 27",parse_mode="HTML")
+        add_step(message.chat.id,"sezar_de_en")
+      
+    if step == "sezar_de_uz":
+        if "Error" != caesar_decipher(get_work1(message.chat.id),message.text):
+            bot.send_message(chat_id=message.chat.id,text=f"<b>Encrypted text: </b><code>{get_work1(message.chat.id)}</code>\n<b>Password: </b><code>{message.text}</code>\n<b>Result: </b><code>{caesar_decipher(get_work1(message.chat.id),message.text)} </code >",parse_mode="HTML")
+            add_step(message.chat.id,"home_en")
+        else:
+            bot.send_message(chat_id=message.chat.id,text="You made an error. Learn how to use the bot! /help -- send this command!")
+
+
+
+
+
+bot.polling()

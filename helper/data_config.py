@@ -20,10 +20,12 @@ def pluser():
 
 def add_step(cid,step):
     db.execute(f"UPDATE users SET step=? WHERE cid=?",(str(step),int(cid)))
+    print("--{}--")
     db.commit()
 def get_step(cid):
     x = db.execute(f"SELECT * FROM users WHERE cid={cid}")
     return x.fetchone()[4]
+    print("++++")
 
 def add_work1(cid,work):
     db.execute(f"UPDATE users SET work1=? WHERE cid=?",(str(work),int(cid)))
