@@ -292,7 +292,7 @@ def uz_state(message):
     if step == "encrypt_hill_uz":
         add_work1(message.chat.id,message.text)
         bot.send_message(chat_id=message.chat.id,text="Send your password",parse_mode="HTML")
-        add_step(message.chat.id,"hill_2_uz")
+        add_step(message.chat.id,"hill_2_en")
     if step == "hill_2_en":
         if "Error"!=hillEncrypt(get_work1(message.chat.id),message.text):
                 bot.send_message(chat_id=message.chat.id,text=f"<b>Original text: </b><code>{get_work1(message.chat.id)}</code>\n<b>Password: </b><code>{message.text}</code>\n<b>Result: </b><code>{hillEncrypt(get_work1(message.chat.id),message.text)} </code >",parse_mode="HTML")
@@ -326,7 +326,7 @@ def uz_state(message):
         bot.send_message(chat_id=message.chat.id,text="Send one of the numbers from 1 to 27",parse_mode="HTML")
         add_step(message.chat.id,"sezar_de_en")
       
-    if step == "sezar_de_uz":
+    if step == "sezar_de_en":
         if "Error" != caesar_decipher(get_work1(message.chat.id),message.text):
             bot.send_message(chat_id=message.chat.id,text=f"<b>Encrypted text: </b><code>{get_work1(message.chat.id)}</code>\n<b>Password: </b><code>{message.text}</code>\n<b>Result: </b><code>{caesar_decipher(get_work1(message.chat.id),message.text)} </code >",parse_mode="HTML")
             add_step(message.chat.id,"home_en")
